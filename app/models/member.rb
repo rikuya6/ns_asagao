@@ -7,7 +7,7 @@
 #  name          :string           not null
 #  full_name     :string
 #  email         :string
-#  birthday      :string
+#  birthday      :date
 #  gender        :integer          default(0), not null
 #  administrator :boolean          default(FALSE), not null
 #  created_at    :datetime         not null
