@@ -14,7 +14,7 @@
 # Ignore all logfiles and tempfiles.
 /log/*
 !/log/.keep
-/tm
+/tmp
 .DS_Store
 /.DS_Store/*
 /.DS_Store
