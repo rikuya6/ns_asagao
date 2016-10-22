@@ -2,21 +2,23 @@
 #
 # Table name: members
 #
-#  id            :integer          not null, primary key
-#  number        :integer          not null
-#  name          :string           not null
-#  full_name     :string
-#  email         :string
-#  birthday      :date
-#  gender        :integer          default(0), not null
-#  administrator :boolean          default(FALSE), not null
-#  created_at    :datetime         not null
-#  updated_at    :datetime         not null
+#  id              :integer          not null, primary key
+#  number          :integer          not null
+#  name            :string           not null
+#  full_name       :string
+#  email           :string
+#  birthday        :date
+#  gender          :integer          default(0), not null
+#  administrator   :boolean          default(FALSE), not null
+#  created_at      :datetime         not null
+#  updated_at      :datetime         not null
+#  hashed_password :string
 #
 
 class Member < ActiveRecord::Base
   include EmailAddressChecker
 
+  attr_accessor :password, :password_confirmation
 
   validates :number,      presence: true,
                           numericality: {
@@ -37,15 +39,32 @@ class Member < ActiveRecord::Base
                                     maximum: 20,
                                     allow_blank: true,
                                    },
-                          uniqueness: {
-                                        case_sensitive: false,
-                                      }
+                          uniqueness: { case_sensitive: false, }
 
-  validates :full_name,   length: {
-                                    maximum: 20,
-                                  }
+  validates :full_name,   length: { maximum: 20, }
 
   validate  :check_email
+
+  validates :password,    presence: { on: :create, },
+                          confirmation: { allow_blank: true, }
+
+
+  def password=(val)
+    if val.present?
+      self.hashed_password = BCrypt::Password.create(val)
+    end
+    @password = val
+  end
+
+  def self.authenticate(name, password)
+    member = find_by(name: name)
+    if member && member.hashed_password.present? &&
+        BCrypt::Password.new(member.hashed_password) == password
+      member
+    else
+      nil
+    end
+  end
 
 
   private

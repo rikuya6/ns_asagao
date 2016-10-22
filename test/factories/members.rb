@@ -2,16 +2,17 @@
 #
 # Table name: members
 #
-#  id            :integer          not null, primary key
-#  number        :integer          not null
-#  name          :string           not null
-#  full_name     :string
-#  email         :string
-#  birthday      :date
-#  gender        :integer          default(0), not null
-#  administrator :boolean          default(FALSE), not null
-#  created_at    :datetime         not null
-#  updated_at    :datetime         not null
+#  id              :integer          not null, primary key
+#  number          :integer          not null
+#  name            :string           not null
+#  full_name       :string
+#  email           :string
+#  birthday        :date
+#  gender          :integer          default(0), not null
+#  administrator   :boolean          default(FALSE), not null
+#  created_at      :datetime         not null
+#  updated_at      :datetime         not null
+#  hashed_password :string
 #
 
 FactoryGirl.define do
@@ -20,6 +21,8 @@ FactoryGirl.define do
     sequence(:name) { |n| "Taro#{n}" }
     full_name 'Yamada Taro'
     sequence(:email) { |n| "taro#{n}@example.com" }
-    birthday 20.years.ago
+    birthday 30.years.ago
+    password 'password'
+    password_confirmation 'password'
   end
 end
