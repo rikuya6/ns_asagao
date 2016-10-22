@@ -26,3 +26,17 @@ gnames = %w(太郎 二郎 花子)
     password_confirmation: 'password'
   )
 end
+
+0.upto(29) do |idx|
+  Member.create(
+    number: idx + 20,
+    name: "John#{idx + 1}",
+    full_name: "John#{idx+1}@example.com",
+    email: "#{names[idx]}@example.com",
+    birthday: "1981-12-01",
+    gender: 0,
+    administrator: false,
+    password: "password",
+    password_confirmation: "password"
+  )
+end

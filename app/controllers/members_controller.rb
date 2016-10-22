@@ -1,8 +1,8 @@
 class MembersController < ApplicationController
   before_action :login_required
-
   def index
     @members = Member.order('number')
+      .paginate(page: params[:page], per_page: 15)
   end
 
   def show
@@ -44,13 +44,14 @@ class MembersController < ApplicationController
 
   def search
     @members = Member.search(params[:q])
+      .paginate(page: params[:page], per_page: 15)
     render 'index'
   end
 
   private
 
   def member_params
-    attrs = [:number, :name, :full_name, :gender, :birthday, :email,
+    attrs = [:member, :name, :full_name, :gender, :birthday, :email,
       :password, :password_confirmation]
     attrs << :administrator if current_member.administrator?
     params.require(:member).permit(attrs)
