@@ -21,6 +21,10 @@ class Article < ActiveRecord::Base
       "expired_at IS NULL)", now, now)
   }
 
+  scope :readable_for, ->(member) {
+    member ? all : where(member_only: false)
+  }
+
   validates :title,         presence: true,
                             length: { maximum: 200 }
 
@@ -50,7 +54,7 @@ class Article < ActiveRecord::Base
     self.expired_at = nil if @no_expiration
   end
 
-  def self.sidebar_articles(num = 5)
-    open.order(released_at: :desc).limit(num)
+  def self.sidebar_articles(member, num = 5)
+    open.readable_for(member).order(released_at: :desc).limit(num)
   end
 end

@@ -1,4 +1,5 @@
 class MembersController < ApplicationController
+  before_action :login_required
 
   def index
     @members = Member.order(:number)
@@ -34,7 +35,7 @@ class MembersController < ApplicationController
       render 'edit'
     end
   end
-  
+
   def destroy
     @member = Member.find(params[:id])
     @member.destroy
