@@ -2,7 +2,7 @@ class MembersController < ApplicationController
   before_action :login_required
 
   def index
-    @members = Member.order(:number)
+    @members = Member.order('number')
   end
 
   def show
@@ -10,7 +10,7 @@ class MembersController < ApplicationController
   end
 
   def new
-    @member = Member.new(birthday: Date.new(1990, 1, 1))
+    @member = Member.new(birthday: Date.new(1997, 1, 1,))
   end
 
   def edit
@@ -18,7 +18,7 @@ class MembersController < ApplicationController
   end
 
   def create
-    @member = Member.new(params[:member])
+    @member = Member.new(member_params)
     if @member.save
       redirect_to @member, notice: '会員を登録しました。'
     else
@@ -28,7 +28,7 @@ class MembersController < ApplicationController
 
   def update
     @member = Member.find(params[:id])
-    @member.assign_attributes(params[:member])
+    @member.assign_attributes(member_params)
     if @member.save
       redirect_to @member, notice: '会員情報を更新しました。'
     else
@@ -45,5 +45,14 @@ class MembersController < ApplicationController
   def search
     @members = Member.search(params[:q])
     render 'index'
+  end
+
+  private
+
+  def member_params
+    attrs = [:number, :name, :full_name, :gender, :birthday, :email,
+      :password, :password_confirmation]
+    attrs << :administrator if current_member.administrator?
+    params.require(:member).permit(attrs)
   end
 end
