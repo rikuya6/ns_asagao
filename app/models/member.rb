@@ -4,22 +4,29 @@
 #
 #  id              :integer          not null, primary key
 #  number          :integer          not null
-#  name            :string           not null
-#  full_name       :string
-#  email           :string
+#  name            :string(255)      not null
+#  full_name       :string(255)
+#  email           :string(255)
 #  birthday        :date
 #  gender          :integer          default(0), not null
 #  administrator   :boolean          default(FALSE), not null
 #  created_at      :datetime         not null
 #  updated_at      :datetime         not null
-#  hashed_password :string
+#  hashed_password :string(255)
 #
 
 class Member < ActiveRecord::Base
   include EmailAddressChecker
 
+  # アクセサ
   attr_accessor :password, :password_confirmation
 
+
+  # 関連
+  has_many :entries,  dependent: :destroy
+
+
+  # バリデーション
   validates :number,      presence: true,
                           numericality: {
                                           only_integer: true,
@@ -49,6 +56,7 @@ class Member < ActiveRecord::Base
                           confirmation: { allow_blank: true, }
 
 
+  # メソッド
   def password=(val)
     if val.present?
       self.hashed_password = BCrypt::Password.create(val)
@@ -56,6 +64,7 @@ class Member < ActiveRecord::Base
     @password = val
   end
 
+  # クラスメソッド
   def self.authenticate(name, password)
     member = find_by(name: name)
     if member && member.hashed_password.present? &&
@@ -67,6 +76,7 @@ class Member < ActiveRecord::Base
   end
 
 
+  # プライベートメソッド
   private
 
   def self.search(query)

@@ -11,29 +11,41 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20161022074235) do
+ActiveRecord::Schema.define(version: 20160000000004) do
 
   create_table "articles", force: :cascade do |t|
-    t.string   "title",                       null: false
-    t.text     "body",                        null: false
-    t.datetime "released_at",                 null: false
+    t.string   "title",       limit: 255,                   null: false
+    t.text     "body",        limit: 65535,                 null: false
+    t.datetime "released_at",                               null: false
     t.datetime "expired_at"
-    t.boolean  "member_only", default: false, null: false
-    t.datetime "created_at",                  null: false
-    t.datetime "updated_at",                  null: false
+    t.boolean  "member_only",               default: false, null: false
+    t.datetime "created_at",                                null: false
+    t.datetime "updated_at",                                null: false
   end
 
+  create_table "entries", force: :cascade do |t|
+    t.integer  "member_id",  limit: 4,                       null: false
+    t.string   "title",      limit: 255,                     null: false
+    t.text     "body",       limit: 65535
+    t.datetime "posted_at",                                  null: false
+    t.string   "status",     limit: 255,   default: "draft", null: false
+    t.datetime "created_at",                                 null: false
+    t.datetime "updated_at",                                 null: false
+  end
+
+  add_index "entries", ["member_id"], name: "index_entries_on_member_id", using: :btree
+
   create_table "members", force: :cascade do |t|
-    t.integer  "number",                          null: false
-    t.string   "name",                            null: false
-    t.string   "full_name"
-    t.string   "email"
+    t.integer  "number",          limit: 4,                   null: false
+    t.string   "name",            limit: 255,                 null: false
+    t.string   "full_name",       limit: 255
+    t.string   "email",           limit: 255
     t.date     "birthday"
-    t.integer  "gender",          default: 0,     null: false
-    t.boolean  "administrator",   default: false, null: false
-    t.datetime "created_at",                      null: false
-    t.datetime "updated_at",                      null: false
-    t.string   "hashed_password"
+    t.integer  "gender",          limit: 4,   default: 0,     null: false
+    t.boolean  "administrator",               default: false, null: false
+    t.datetime "created_at",                                  null: false
+    t.datetime "updated_at",                                  null: false
+    t.string   "hashed_password", limit: 255
   end
 
 end

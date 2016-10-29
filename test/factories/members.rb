@@ -4,15 +4,15 @@
 #
 #  id              :integer          not null, primary key
 #  number          :integer          not null
-#  name            :string           not null
-#  full_name       :string
-#  email           :string
+#  name            :string(255)      not null
+#  full_name       :string(255)
+#  email           :string(255)
 #  birthday        :date
 #  gender          :integer          default(0), not null
 #  administrator   :boolean          default(FALSE), not null
 #  created_at      :datetime         not null
 #  updated_at      :datetime         not null
-#  hashed_password :string
+#  hashed_password :string(255)
 #
 
 FactoryGirl.define do

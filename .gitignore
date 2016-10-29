@@ -18,5 +18,6 @@
 .DS_Store
 /.DS_Store/*
 /.DS_Store
+/vendor/
 secret.key
 public/assets
