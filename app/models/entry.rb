@@ -27,6 +27,8 @@ class Entry < ActiveRecord::Base
 
   # 関連
   belongs_to :author, class_name: 'Member', foreign_key: 'member_id'
+  has_many :votes, dependent: :destroy
+  has_many :voters, through: :votes, source: :member
 
 
   # バリデーション

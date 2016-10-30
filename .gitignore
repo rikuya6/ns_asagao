@@ -21,3 +21,4 @@
 /vendor/
 secret.key
 public/assets
+/doc/

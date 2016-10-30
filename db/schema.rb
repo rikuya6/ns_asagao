@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160000000005) do
+ActiveRecord::Schema.define(version: 20160000000006) do
 
   create_table "articles", force: :cascade do |t|
     t.string   "title",       limit: 255,                   null: false
@@ -57,5 +57,15 @@ ActiveRecord::Schema.define(version: 20160000000005) do
     t.datetime "updated_at",                                  null: false
     t.string   "hashed_password", limit: 255
   end
+
+  create_table "votes", force: :cascade do |t|
+    t.integer  "entry_id",   limit: 4, null: false
+    t.integer  "member_id",  limit: 4, null: false
+    t.datetime "created_at",           null: false
+    t.datetime "updated_at",           null: false
+  end
+
+  add_index "votes", ["entry_id"], name: "index_votes_on_entry_id", using: :btree
+  add_index "votes", ["member_id"], name: "index_votes_on_member_id", using: :btree
 
 end

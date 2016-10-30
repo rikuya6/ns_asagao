@@ -24,6 +24,7 @@ group :development, :test do
   gem 'mysql2'
   gem 'byebug'
   gem 'guard'
+  gem 'railroady'
 end
 
 group :test do
