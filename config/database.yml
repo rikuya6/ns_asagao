@@ -17,6 +17,7 @@ test:
 production:
   port: 5432
   adapter: postgresql
+  database: dfb2lqn024jor9
   encoding: unicode
   pool: 5
   username: zwaerpbeopebil
