@@ -15,11 +15,6 @@ test:
   database: asagao_test
 
 production:
-  port: 5432
   adapter: postgresql
-  database: dfb2lqn024jor9
   encoding: unicode
   pool: 5
-  username: zwaerpbeopebil
-  password: sU6Mr9MomYJP2X66F9EfjykZrl
-  host: ec2-54-163-245-3.compute-1.amazonaws.com
