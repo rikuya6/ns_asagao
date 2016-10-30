@@ -3,8 +3,8 @@
 # Table name: articles
 #
 #  id          :integer          not null, primary key
-#  title       :string           not null
-#  body        :text             not null
+#  title       :string(255)      not null
+#  body        :text(65535)      not null
 #  released_at :datetime         not null
 #  expired_at  :datetime
 #  member_only :boolean          default(FALSE), not null
@@ -15,6 +15,8 @@
 class Article < ActiveRecord::Base
   before_validation :clear_expired_at
 
+
+  # スコープ
   scope :open, -> {
     now = Time.current
     where("released_at <= ? AND (? < expired_at OR " +
@@ -25,6 +27,8 @@ class Article < ActiveRecord::Base
     member ? all : where(member_only: false)
   }
 
+
+  # バリデーション
   validates :title,         presence: true,
                             length: { maximum: 200 }
 
@@ -34,6 +38,8 @@ class Article < ActiveRecord::Base
 
   validate :check_expired_at
 
+
+  # メソッド
   def no_expiration
     expired_at.blank?
   end
@@ -42,6 +48,8 @@ class Article < ActiveRecord::Base
     @no_expiration = val.in?([true, 1, '1'])
   end
 
+
+  # プライベートメソッド
   private
 
   def check_expired_at

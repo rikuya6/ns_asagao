@@ -1,7 +1,7 @@
 ENV['RAILS_ENV'] ||= 'test'
 require File.expand_path('../../config/environment', __FILE__)
 require 'rails/test_help'
-require "minitest/reporters"
+require 'minitest/reporters'
 Minitest::Reporters.use!
 
 class ActiveSupport::TestCase
@@ -18,5 +18,11 @@ class ActiveSupport::TestCase
   # ログアウト状態にする
   def logout
     session.delete(:member_id)
+  end
+
+  # アップロードしたファイル
+  def uploaded_file(fname, type)
+    Rack::Test::UploadedFile.new(
+      Rails.root.join('test/factories', fname), type, true)
   end
 end

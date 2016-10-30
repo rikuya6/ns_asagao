@@ -5,9 +5,23 @@ Rails.application.routes.draw do
   get 'internal_server_error' => 'top#internal_server_error'
   resources :members do
     collection { get 'search' }
+    resources :entries, only: [:index]
   end
   resources :articles
+  resources :entries do
+    member { patch 'like', 'unlike' }
+    collection { get 'voted' }
+  end
   resource :session, only: [:create, :destroy]
   resource :account, only: [:show, :edit, :update]
+
+  namespace :admin do
+    root to: 'top#index'
+    resources :members do
+      collection { get 'search' }
+    end
+    resources :articles
+  end
+
   match '*anything' => 'top#not_found', via: [:get, :post, :patch, :delete]
 end

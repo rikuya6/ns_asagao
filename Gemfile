@@ -20,9 +20,11 @@ gem 'will_paginate'
 # gem 'capistrano-rails', group: :development
 
 group :development, :test do
-  gem 'sqlite3'
+  # gem 'sqlite3'
+  gem 'mysql2'
   gem 'byebug'
   gem 'guard'
+  gem 'railroady'
 end
 
 group :test do
@@ -33,7 +35,7 @@ group :test do
 end
 
 group :development do
-  gem 'web-console', '~> 2.0'
+  gem 'web-console'
   gem 'spring'
 end
 
