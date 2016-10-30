@@ -35,7 +35,7 @@ ja:
         status_public: '公開'
       member_image:
         uploaded_image: '画像'
-        destroy: '削除する'
+        _destroy: '削除する'
       image:
         uploaded_image: '画像'
     errors:
