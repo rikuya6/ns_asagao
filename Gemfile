@@ -39,6 +39,7 @@ group :test do
 end
 
 group :development do
+  gem 'annotate'
   gem 'web-console'
   gem 'spring'
 end
